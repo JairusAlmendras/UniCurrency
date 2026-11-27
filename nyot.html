@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon"type="images/jpg" href="nyot.jpg">
+    <title>UNICURRENCY</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2> UNICURRENCY</h2>
+
+    <div class="profile">
+        <div class="avatar">V</div>
+        <div>
+            <strong>Vincent</strong>
+            <small>Customer Account</small>
+        </div>
+    </div>
+
+    <button class="menu active" onclick="showPage('dashboard',this)">🏠 Dashboard</button>
+    <button class="menu" onclick="showPage('exchange',this)">💱 Exchange Money</button>
+    <button class="menu" onclick="showPage('cashin',this)">➕ Cash In</button>
+    <button class="menu" onclick="showPage('send',this)">📤 Send Money</button>
+    <button class="menu" onclick="showPage('history',this)">📋 Transactions</button>
+    <button class="menu" onclick="showPage('profile',this)">👤 My Profile</button>
+
+    <div class="sidebar-footer">
+        UNICURRENCY v1.0<br>
+        Student Project
+    </div>
+</div>
+
+<main class="main">
+
+    <header>
+        <div>
+            <h2 id="pageTitle">Dashboard</h2>
+            <p>Welcome to your digital wallet!</p>
+        </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page active">
+
+        <div class="welcome">
+            <div>
+                <p>WELCOME BACK!</p>
+                <h1>Hello, Vincent 👋</h1>
+                <small>Manage and exchange your money easily.</small>
+            </div>
+            <span>🌎</span>
+        </div>
+
+        <div class="balance">
+            <p>AVAILABLE BALANCE</p>
+            <h1 id="balance">₱1,000.00</h1>
+            <small>Philippine Peso (PHP)</small>
+            <div>
+                <button onclick="showPage('cashin')">+ Cash In</button>
+                <button onclick="showPage('send')">Send Money →</button>
+            </div>
+        </div>
+
+        <h3>Quick Services</h3>
+
+        <div class="services">
+            <button onclick="showPage('exchange')">💱<br>Exchange</button>
+            <button onclick="showPage('cashin')">➕<br>Cash In</button>
+            <button onclick="showPage('send')">📤<br>Send Money</button>
+            <button onclick="showPage('history')">📋<br>History</button>
+        </div>
+
+        <div class="card">
+            <h3>Recent Transactions</h3>
+            <div id="recentHistory"></div>
+        </div>
+
+    </section>
+
+    <!-- EXCHANGE -->
+    <section id="exchange" class="page">
+        <div class="card form-card">
+            <h2>💱 Currency Exchange</h2>
+            <p>Convert foreign money into Philippine Pesos.</p>
+
+            <label>Amount</label>
+            <input type="number" id="exchangeAmount" value="100" min="0.01">
+
+            <label>From Currency</label>
+            <select id="fromCurrency">
+                <option value="USD">🇺🇸 USD - US Dollar</option>
+                <option value="EUR">🇪🇺 EUR - Euro</option>
+                <option value="JPY">🇯🇵 JPY - Japanese Yen</option>
+                <option value="PHP">🇵🇭 PHP - Philippine Peso</option>
+            </select>
+
+            <label>To Currency</label>
+            <select id="toCurrency">
+                <option value="PHP">🇵🇭 PHP - Philippine Peso</option>
+                <option value="USD">🇺🇸 USD - US Dollar</option>
+                <option value="EUR">🇪🇺 EUR - Euro</option>
+                <option value="JPY">🇯🇵 JPY - Japanese Yen</option>
+            </select>
+
+            <div class="result">
+                <small>CONVERTED AMOUNT</small>
+                <h1 id="convertedAmount">₱5,800.00</h1>
+                <p id="rateText">Sample rate: 1 USD = 58 PHP</p>
+            </div>
+
+            <button class="primary" onclick="calculateExchange()">Calculate</button>
+            <button class="secondary" onclick="addExchange()">Add to Wallet</button>
+        </div>
+    </section>
+
+    <!-- CASH IN -->
+    <section id="cashin" class="page">
+        <div class="card form-card">
+            <h2>➕ Cash In</h2>
+            <p>Add money to your digital wallet.</p>
+
+            <label>Amount (PHP)</label>
+            <input type="number" id="cashAmount" placeholder="Enter amount" min="0.01">
+
+            <label>Method</label>
+            <select id="cashMethod">
+                <option>Demo Cash In</option>
+                <option>Bank Transfer (Simulation)</option>
+            </select>
+
+            <button class="primary" onclick="cashIn()">Add Money</button>
+        </div>
+    </section>
+
+    <!-- SEND MONEY -->
+    <section id="send" class="page">
+        <div class="card form-card">
+            <h2>📤 Send Money</h2>
+            <p>Send money to another demo customer.</p>
+
+            <label>Recipient Name</label>
+            <input type="text" id="recipient" placeholder="Enter recipient name">
+
+            <label>Mobile Number</label>
+            <input type="tel" id="mobile" placeholder="09XXXXXXXXX" maxlength="11">
+
+            <label>Amount (PHP)</label>
+            <input type="number" id="sendAmount" placeholder="Enter amount" min="0.01">
+
+            <button class="primary" onclick="sendMoney()">Confirm Send</button>
+        </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="history" class="page">
+        <div class="card">
+            <h2>📋 Transaction History</h2>
+            <p>View your recent activities.</p>
+            <div id="allHistory"></div>
+        </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="page">
+        <div class="card form-card">
+            <h2>👤 My Profile</h2>
+
+            <label>Full Name</label>
+            <input type="text" id="name" value="Vincent">
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="example@email.com">
+
+            <label>Mobile Number</label>
+            <input type="tel" id="phone" placeholder="09XXXXXXXXX">
+
+            <label>Country</label>
+            <input type="text" id="country" value="Philippines">
+
+            <button class="primary" onclick="saveProfile()">Save Information</button>
+        </div>
+    </section>
+
+    <footer>
+        <h3>🌐 UNICURRENCY</h3>
+        <p>Simple, Fast and Convenient Currency Exchange.</p>
+        <small>© 2026 </small>
+    </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
+
